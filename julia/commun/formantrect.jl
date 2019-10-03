@@ -1,3 +1,5 @@
+#Function qui renvoie un formant f(x) = sinc(pi*x) si x != 0 et 1 sinon.
+
 function formantrect(TAILLE, SURECHANTILLONNAGE)
     PI = 3.1415926535;
     formant = zeros(TAILLE);

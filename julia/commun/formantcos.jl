@@ -1,3 +1,5 @@
+#Function qui renvoie un formant f(x) = cos(2*pi*x)/(1-16*x²) si x² != 1/16 et pi/4 sinon.
+
 function formantcos(TAILLE, SURECHANTILLONNAGE)
     PI = 3.1415926535;
     formant = zeros(TAILLE);
