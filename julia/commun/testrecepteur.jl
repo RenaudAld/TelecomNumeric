@@ -12,10 +12,8 @@ formant = formantcos(SURECHANTILLONNAGE*TAILLE_FORMANT+1, SURECHANTILLONNAGE);
 signal = emission(message, formant, SURECHANTILLONNAGE);
 filtre = formant[end:-1:1] / (formant'*formant);
 filtre = filtre[1:end,1];
-recu = reception(signal, filtre, SURECHANTILLONNAGE, 1+TAILLE_FORMANT*SURECHANTILLONNAGE/2);
-print(length(recu))
-print(length(message))
-#plot(axe_temporel(length(recu), SURECHANTILLONNAGE, SURECHANTILLONNAGE*TAILLE_FORMANT),recu)
+recu,ana = reception(signal, filtre, SURECHANTILLONNAGE, 1+TAILLE_FORMANT*SURECHANTILLONNAGE/2);
+plot(axe_temporel(length(ana), SURECHANTILLONNAGE, SURECHANTILLONNAGE*TAILLE_FORMANT),ana)
 plot(recu)
-plot(message)
-#sum(abs.(recu-message)/2)
+#plot(message)
+sum(abs.(recu-message)/2)
