@@ -1,13 +1,8 @@
 using DSP;
-function reception(signal,filtre,SURECHANTILLONAGE,sync)
+function reception(signal,filtre,SURECHANTILLONNAGE,decalage)
+    int_decalage = Int(decalage)
     signal_conv = conv(signal,filtre);
-    signal_conv_synced = [sync:length(signal_conv)];
-    signal_echantillone = [] ;
-    for i = 1:SURECHANTILLONAGE:length(signal_conv_synced)
-        push!(signal_echantillone,signal_conv_synced[i]);
-    end
-    for i=length(signal_echantillone):length(signal)
-        push!(signal_echantillone,0);
-    end
-    return(signal_echantillone);
+    signal_tronc = signal_conv[int_decalage*2+1:1:length(signal_conv)-int_decalage*2+1]
+    signal_echant = signal_tronc[1:SURECHANTILLONNAGE:end]
+    return(signal_echant);
 end
