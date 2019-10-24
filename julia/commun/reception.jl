@@ -5,6 +5,7 @@
 using DSP;
 
 function reception(signal, filtre, SURECHANTILLONNAGE, decalage)
+    decalage = Int(decalage);
     signal_conv = conv(signal, filtre);
     start_tronc = decalage;
     end_tronc = length(signal_conv) - decalage + 1;
