@@ -18,7 +18,7 @@ formant = formantcos(SURECHANTILLONNAGE * TAILLE_FORMANT + 1, SURECHANTILLONNAGE
 signal = emission(message, formant, SURECHANTILLONNAGE);
 filtre = formant[end:-1:1] / (formant' * formant);
 filtre = filtre[1:end,1];
-recu = reception(signal, filtre, SURECHANTILLONNAGE, 1 + TAILLE_FORMANT * SURECHANTILLONNAGE);
+recu = reception(signal, filtre, SURECHANTILLONNAGE, (1 + TAILLE_FORMANT * SURECHANTILLONNAGE)/2);
 
 print("Taux d'erreur binaire: ")
 sum(abs.(recu-message) / 2)
