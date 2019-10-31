@@ -9,7 +9,7 @@ TAILLE_CANAL = 5;
 
 formant = formantcos(SURECHANTILLONNAGE*TAILLE_FORMANT+1, SURECHANTILLONNAGE);
 lecanal = canal(110, SURECHANTILLONNAGE);
-formantbis = conv(formant, lecanal);
+formantbis = conv(formant,lecanal);
 filtre = formantbis[end:-1:1] / (formantbis'*formantbis);
 filtre = filtre[1:end,1];
 courbe_min = [];
@@ -19,7 +19,7 @@ for Pb = 0:0.25:8
     err_min = 1000;
     err_max = 0;
     for i = 1:10
-        err = erreur_canal(Pb,TAILLE,SURECHANTILLONNAGE,TAILLE_FORMANT,formant,filtre,lecanal);
+        err = erreur_canal(Pb,TAILLE,SURECHANTILLONNAGE,formant,filtre,lecanal);
         if(err>err_max)
             err_max = err;
         end
