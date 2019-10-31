@@ -31,5 +31,5 @@ for Pb = 0:0.25:8
     global courbe_min = [courbe_min; err_min];
     global courbe_max = [courbe_max; err_max];
 end
-plot(x,courbe_max, color="green")
-plot(x,courbe_min, color="green")
+plot(x,courbe_max, color="pink")
+plot(x,courbe_min, color="pink")
