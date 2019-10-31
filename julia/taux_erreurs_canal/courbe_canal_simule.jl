@@ -5,12 +5,12 @@ include("canal.jl")
 SURECHANTILLONNAGE = 30;
 TAILLE = 10000;
 TAILLE_FORMANT = 100;
+TAILLE_CANAL = 5;
 
 formant = formantcos(SURECHANTILLONNAGE*TAILLE_FORMANT+1, SURECHANTILLONNAGE);
 filtre = formant[end:-1:1] / (formant'*formant);
 filtre = filtre[1:end,1];
-#lecanal = canal();
-lecanal = [1.0];
+lecanal = canal(110, SURECHANTILLONNAGE);
 courbe_min = [];
 courbe_max = [];
 x = [];
@@ -32,4 +32,3 @@ for Pb = 0:0.25:8
 end
 plot(x,courbe_max, color="green")
 plot(x,courbe_min, color="green")
-    
