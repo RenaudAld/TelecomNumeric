@@ -6,11 +6,11 @@ include("../commun/formantcos.jl")
 include("canal.jl")
 SURECHANTILLONNAGE = 30;
 TAILLE = 10000;
-TAILLE_FORMANT = 100;
-TAILLE_CANAL = 5;
+TAILLE_FORMANT = SURECHANTILLONNAGE*10+1;
+TAILLE_CANAL = SURECHANTILLONNAGE*10+1;
 
-formant = formantcos(SURECHANTILLONNAGE*TAILLE_FORMANT+1, SURECHANTILLONNAGE);
-lecanal = canal(110, SURECHANTILLONNAGE);
+formant = formantcos(TAILLE_FORMANT, SURECHANTILLONNAGE);
+lecanal = canal(TAILLE_CANAL, SURECHANTILLONNAGE);
 formantbis = conv(formant,lecanal);
 
 FORMANTBIS = fft(formantbis)

@@ -1,6 +1,6 @@
+## Pour une taille de canal et un surechantillonage donné renvoie un canal
+## de la même taille, sa forme est c(t) = 0 si t < 0 et c(t) = exp(-t) sinon
 function canal(TAILLE_CANAL, SURECHANTILLONNAGE)
-    TAILLE_CANAL = 2 * TAILLE_CANAL + 1;
-    TAILLE_CANAL = (TAILLE_CANAL - 1) * SURECHANTILLONNAGE + 1;
     canal = zeros(TAILLE_CANAL);
     for i=1:TAILLE_CANAL
         if i < (TAILLE_CANAL - 1) / 2

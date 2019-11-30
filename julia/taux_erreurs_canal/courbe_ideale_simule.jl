@@ -4,9 +4,9 @@ include("../commun/formantcos.jl")
 
 SURECHANTILLONNAGE = 30;
 TAILLE = 10000;
-TAILLE_FORMANT = 100;
+TAILLE_FORMANT = SURECHANTILLONNAGE*10+1;
 
-formant = formantcos(SURECHANTILLONNAGE*TAILLE_FORMANT+1, SURECHANTILLONNAGE);
+formant = formantcos(TAILLE_FORMANT, SURECHANTILLONNAGE);
 filtre = formant[end:-1:1] / (formant'*formant);
 filtre = filtre[1:end,1];
 

@@ -1,39 +1,66 @@
 using PyPlot
 using FFTW
 
-include("erreur_canal.jl")
+include("sortie_canal_interference.jl")
 include("../commun/formantcos.jl")
+include("../commun/emission.jl")
+include("../commun/reception_sans_seuil.jl")
+include("../commun/bruit.jl")
 include("canal.jl")
-SURECHANTILLONNAGE = 30;
-TAILLE = 10000;
-TAILLE_FORMANT = 100;
-TAILLE_CANAL = 5;
+SURECHANTILLONNAGE = 6;
+TAILLE = 10001;
+TAILLE_FORMANT = SURECHANTILLONNAGE * 10 + 1;
+TAILLE_CANAL = SURECHANTILLONNAGE * 10 + 1;
 
-formant = formantcos(SURECHANTILLONNAGE*TAILLE_FORMANT+1, SURECHANTILLONNAGE);
-lecanal = canal(110, SURECHANTILLONNAGE);
+formant = formantcos(TAILLE_FORMANT, SURECHANTILLONNAGE);
+lecanal = canal(TAILLE_CANAL, SURECHANTILLONNAGE);
 formantbis = conv(formant,lecanal);
 
-FORMANTBIS = fft(formantbis)
-
-HFORMANTBIS = FORMANTBIS
-pas = Int((length(FORMANTBIS)-1)/30)
-for i = 1:length(HFORMANTBIS)
-    truc = sum(abs.(FORMANTBIS[(i-1)%pas+1:pas:end]).^2)
-    HFORMANTBIS[i] = HFORMANTBIS[i] / truc
-end
-formantbis = real.(ifft(HFORMANTBIS))
-
-
-filtre = formantbis[end:-1:1] / (formantbis'*formantbis);
+filtre_naif = formantbis[end:-1:1];
+filtre_naif = filtre_naif[1:end,1];
+dirac = [0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0];
+message = 2 .* Int.(rand(TAILLE) .> 0.5) .- 1;
+signal = emission(message, formant, SURECHANTILLONNAGE);
+signal = conv(signal, lecanal);
+interference = reception_sans_seuil(signal, filtre_naif, SURECHANTILLONNAGE, (TAILLE_CANAL - 1 + TAILLE_FORMANT - 1)/2);
+# print(length(formantbis))
+# print("\n")
+# print(length(lecanal))
+# print("\n")
+# print(length(signal))
+# print("\n")
+# print(length(interference))
+# print("\n\n")
+# plot(interference);
+INTERFERENCE = fft(interference)
+INTERFERENCE_INV = 1 ./ INTERFERENCE;
+interference_inv = real.(ifft(INTERFERENCE_INV));
+#plot(interference_inv)
+filtre = formantbis[end:-1:1];
 filtre = filtre[1:end,1];
 courbe_min = [];
 courbe_max = [];
 x = [];
+
 for Pb = 0:0.25:8
     err_min = 1000;
     err_max = 0;
     for i = 1:10
-        err = erreur_canal(Pb,TAILLE,SURECHANTILLONNAGE,formant,filtre,lecanal);
+        recu_echant = sortie_canal_interference(Pb,TAILLE,SURECHANTILLONNAGE,formant,filtre,lecanal,message);
+        print(length(recu_echant))
+        print("\n")
+        recu = conv(recu_echant, interference_inv);
+        recu = (recu .> 0) .* 2 .- 1;
+        decalage = (length(interference_inv)-1)/2;
+        decalage = Int(decalage);
+        start_tronc = decalage + 1;
+        end_tronc = length(recu) - decalage;
+        recu = recu[start_tronc:1:end_tronc]
+        print(length(recu))
+        print("\n")
+        print(length(message))
+        print("\n\n")
+        err = sum(abs.(recu-message)/2)/TAILLE
         if(err>err_max)
             err_max = err;
         end
