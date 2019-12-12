@@ -1,5 +1,7 @@
-using PyPlot# Une seule fois au lancement de Julia
-using DSP# Une seule fois au lancement de Julia
+# Script qui affiche le signal en sortie de l'emetteur
+
+using PyPlot
+using DSP
 
 include("../commun/emission.jl")
 include("../commun/formantcos.jl")
