@@ -17,8 +17,7 @@ formant = formantcos(TAILLE_FORMANT, SURECHANTILLONNAGE);
 lecanal = canal(TAILLE_CANAL, SURECHANTILLONNAGE);
 formantbis = conv(formant,lecanal);
 filtre = formantbis[end:-1:1];
-filtre = filtre[1:end,1];
-Ef = (filtre'*filtre)[1]/SURECHANTILLONNAGE;
+Ef = (filtre'*filtre)/SURECHANTILLONNAGE;
 
 dirac = [0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0];
 
@@ -31,7 +30,7 @@ INTERFERENCE = fft(interference)
 message_sans_bruit = 2 .* Int.(rand(TAILLE) .> 0.5) .- 1;
 signal_sans_bruit = emission(message_sans_bruit, formant, SURECHANTILLONNAGE);
 signal_sans_bruit = conv(signal_sans_bruit,lecanal);
-Eb = ((signal_sans_bruit'*signal_sans_bruit)/length(message_sans_bruit))[1]
+Eb = ((signal_sans_bruit'*signal_sans_bruit)/TAILLE)[1]
 
 courbe_min = [];
 courbe_max = [];
@@ -42,8 +41,8 @@ for Pb = 0:0.25:8
     err_max = 0;
     print(Pb)
     print("\n")
-    N0 = (Eb/(10^(Pb/10)));
-    INTERFERENCE_INV = 1 ./ (N0/(2*Ef) .+ INTERFERENCE);
+    N0 = (Ef/(10^(Pb/10))) / 2;
+    INTERFERENCE_INV = 1 ./ (N0 .+ INTERFERENCE);
     interference_inv = [real.(ifft(INTERFERENCE_INV))[2:end];0]
 
     for i = 1:10
