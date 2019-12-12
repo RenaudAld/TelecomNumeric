@@ -1,4 +1,6 @@
-#Function qui renvoie un formant f(x) = sinc(pi*x) si x != 0 et 1 sinon.
+# Fonction qui renvoie un formant en cosinus
+# TAILLE: nombre de points du formant
+# SURECHANTILLONNAGE: taux de surechantillonage du formant
 
 function formantrect(TAILLE, SURECHANTILLONNAGE)
     PI = 3.1415926535;

@@ -1,4 +1,6 @@
-#Fonction qui renvoie un formant f(x) = cos(2*pi*x)/(1-16*x²) si x² != 1/16 et pi/4 sinon.
+# Fonction qui renvoie un formant en cosinus
+# TAILLE: nombre de points du formant
+# SURECHANTILLONNAGE: taux de surechantillonage du formant
 
 function formantcos(TAILLE, SURECHANTILLONNAGE)
     PI = 3.1415926535;

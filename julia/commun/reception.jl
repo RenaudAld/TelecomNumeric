@@ -1,12 +1,12 @@
 # Cette fonction renvoie le message en sortie du recepteur un fois qu'il a ete`
-# seuille. Elle prend en parametre le decalage temporel insuit par le elements
+# seuillé. Elle prend en paramètre le décalage temporel induit par les élements
 # en amont du recepteur
 
 using DSP;
 
 function reception(signal, filtre, SURECHANTILLONNAGE, decalage)
     signal_conv = conv(signal, filtre);
-    decalage = decalage + (length(filtre)-1) / 2;
+    decalage = decalage + (length(filtre) - 1) / 2;
     decalage = Int(decalage);
     start_tronc = decalage + 1;
     end_tronc = length(signal_conv) - decalage;

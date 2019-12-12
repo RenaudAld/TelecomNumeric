@@ -1,4 +1,4 @@
-# Cette fonction revoie le message en sortie de l'emetteur (modelise avec
+# Cette fonction revoie le message en sortie de l'emetteur (modelisé avec
 # le formant), surechantillonne d'un facteur SURECHANTILLONNAGE
 
 function emission(message, formant, SURECHANTILLONNAGE)
