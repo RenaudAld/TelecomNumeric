@@ -1,3 +1,9 @@
+# Ce script simule la chaine de transmission avec bruit et affiche son
+# taux d'erreur binaire
+
+using PyPlot
+using Printf
+
 include("../commun/bruit.jl")
 include("../commun/formantcos.jl")
 include("../commun/emission.jl")
